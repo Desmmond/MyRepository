@@ -22,43 +22,45 @@ class ShoppingListApplication {
                     case 1:
                         Product product = new Product();
                         System.out.println("Enter product name: ");
-                        Scanner scan = new Scanner(System.in);
-                        String name = scan.nextLine();
-                        System.out.println(name);
+                        String name = scanner.nextLine();
+
                         if(name.length() >= 3 && name.length() <= 32) {
                             product.setName(name);
                         }else {
-                            System.out.println("Invalid name");
+                            System.out.println("Name cannot be less than 3 characters and more than 32. Please try again|");
+                            break;
                         }
 
                         System.out.println("Enter product price: ");
                         BigDecimal price = new BigDecimal(scanner.nextLine());
-                        //Product product = new Product();
                         if(price.intValue()> 0) {
                             product.setPrice(price);
                         }else{
-                            System.out.println("Invalid price");
+                            System.out.println("Product price cannot be less than zero. Please try again|");
                             break;
                         }
 
-
-
-
                         System.out.println("Enter product category: ");
-                        String category = scanner.nextLine();
-                        System.out.println("Enter product discount");
-                        int discount = scanner.nextInt();
-                        System.out.println("Enter product description");
-                        String description = scanner.nextLine();
+                         String category = scanner.nextLine();
+                         product.setCategory(category);
 
-                        if(discount > 100 || discount < 0) {
+                        System.out.println("Enter product discount: ");
+                        int discount = scanner.nextInt();
+                        if(discount <= 100 && discount >= 0) {
                             product.setDiscount(discount);
                         }else {
-                            System.out.println("Invalid discount");
+                            System.out.println("The discount cannot be more than 100 percent and less then 0.");
+                            break;
                         }
-                        product.setId(productIdSequence);
-                        product.setCategory(category);
+                        
+                        scanner.nextLine();
+                        System.out.println("Enter product description: ");
+                        String description = scanner.nextLine();
                         product.setDescription(description);
+
+
+
+                        product.setId(productIdSequence);
                         productRepository.put(productIdSequence, product);
                         productIdSequence++;
                         System.out.println("Result: " + product.getId());
