@@ -7,7 +7,12 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class ConsoleUI {
-    private ProductService productService = new ProductService();
+
+    private final ProductService productService;
+
+    public ConsoleUI(ProductService productService) {
+        this.productService = productService;
+    }
 
     public void execute() {
         while (true) {
