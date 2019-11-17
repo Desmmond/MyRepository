@@ -1,7 +1,9 @@
 package com.javaguru.shoppinglist.service.validation;
 
 import com.javaguru.shoppinglist.domain.Product;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductNameValidationRule implements ProductValidationRule {
 
     private static final int MIN_LENGTH = 3;

@@ -1,12 +1,13 @@
 package com.javaguru.shoppinglist.repository;
 
 import com.javaguru.shoppinglist.domain.Product;
-
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Repository
 public class ProductInMemoryRepository {
 
     private Long productIdSequence = 0L;
@@ -24,12 +25,12 @@ public class ProductInMemoryRepository {
 
     public boolean existsByName(String name) {
         return products.values().stream()
-                .anyMatch(task -> task.getName().equalsIgnoreCase(name));
+                .anyMatch(product -> product.getName().equalsIgnoreCase(name));
     }
 
     public Optional<Product> findProductByName(String name) {
         return products.values().stream()
-                .filter(task -> task.getName().equalsIgnoreCase(name))
+                .filter(product -> product.getName().equalsIgnoreCase(name))
                 .findFirst();
     }
 

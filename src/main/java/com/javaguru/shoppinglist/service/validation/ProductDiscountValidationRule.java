@@ -3,7 +3,9 @@ package com.javaguru.shoppinglist.service.validation;
 import com.javaguru.shoppinglist.domain.Product;
 
 import java.math.BigDecimal;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductDiscountValidationRule implements ProductValidationRule {
     private static final BigDecimal MIN_PRICE_FOR_DISCOUNT = new BigDecimal("20");
     private static final BigDecimal MAX_DISCOUNT = new BigDecimal("100");
