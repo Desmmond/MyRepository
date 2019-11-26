@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.javaguru</groupId>
-    <artifactId>ScoppingListApplication</artifactId>
+    <artifactId>shoppingList</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Schopping-List-Application</name>
-    <description>Java 2 course project</description>
+    <name>shopping_list</name>
+    <description>demo project</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -31,9 +31,22 @@
             <version>3.12.0</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.22.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.3.22.RELEASE</version>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
