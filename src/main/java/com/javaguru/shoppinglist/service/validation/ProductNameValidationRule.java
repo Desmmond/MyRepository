@@ -23,6 +23,5 @@ public class ProductNameValidationRule implements ProductValidationRule {
 
     }
 
-
 }
 

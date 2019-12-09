@@ -1,9 +1,9 @@
 package com.javaguru.shoppinglist.service.validation;
 
 import com.javaguru.shoppinglist.domain.Product;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import org.springframework.stereotype.Component;
 
 @Component
 public class ProductPriceValidationRule implements ProductValidationRule {
@@ -23,4 +23,5 @@ public class ProductPriceValidationRule implements ProductValidationRule {
         }
     }
 }
+
 

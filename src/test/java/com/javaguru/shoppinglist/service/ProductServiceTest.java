@@ -1,7 +1,7 @@
 package com.javaguru.shoppinglist.service;
 
 import com.javaguru.shoppinglist.domain.Product;
-import com.javaguru.shoppinglist.repository.ProductInMemoryRepository;
+import com.javaguru.shoppinglist.repository.ProductRepository;
 import com.javaguru.shoppinglist.service.validation.ProductValidationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class ProductServiceTest {
 
     @Mock
-    private ProductInMemoryRepository repository;
+    private ProductRepository repository;
 
     @Mock
     private ProductValidationService validationService;
@@ -40,7 +40,7 @@ public class ProductServiceTest {
         Product product = product();
         when(repository.save(product)).thenReturn(product);
 
-        Long result = victim.createProduct(product);
+        Product result = victim.createProduct(product);
 
         verify(validationService).validate(productCaptor.capture());
         Product captorResult = productCaptor.getValue();

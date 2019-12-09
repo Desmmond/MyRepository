@@ -1,13 +1,13 @@
 package com.javaguru.shoppinglist.service.repository;
 
 import com.javaguru.shoppinglist.domain.Product;
-import com.javaguru.shoppinglist.repository.ProductInMemoryRepository;
+import com.javaguru.shoppinglist.repository.ProductRepository;
 import org.junit.Test;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.extractProperty;
+
 
 
 public class ProductInMemoryRepositoryTest {
@@ -16,7 +16,32 @@ public class ProductInMemoryRepositoryTest {
     private static final String PRODUCT_DESCRIPTION = "TEST_DESCRIPTION";
     private static final long PRODUCT_ID = 0L;
 
-    private ProductInMemoryRepository victim = new ProductInMemoryRepository();
+    private ProductRepository victim = new ProductRepository() {
+        @Override
+        public Product save(Product product) {
+            return null;
+        }
+
+        @Override
+        public void update(Product product) {
+
+        }
+
+        @Override
+        public Optional<Product> findProductById(Long id) {
+            return Optional.empty();
+        }
+
+        @Override
+        public boolean existsByName(String name) {
+            return false;
+        }
+
+        @Override
+        public Optional<Product> findProductByName(String name) {
+            return Optional.empty();
+        }
+    };
 
     private Product product = product();
 
