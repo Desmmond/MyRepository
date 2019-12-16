@@ -20,58 +20,58 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ProductServiceTest {
+    @RunWith(MockitoJUnitRunner.class)
+    public class ProductServiceTest {
 
-    @Mock
-    private ProductRepository repository;
+        @Mock
+        private ProductRepository repository;
 
-    @Mock
-    private ProductValidationService validationService;
+        @Mock
+        private ProductValidationService validationService;
 
-    @InjectMocks
-    private ProductService victim;
+        @InjectMocks
+        private ProductService victim;
 
-    @Captor
-    private ArgumentCaptor<Product> productCaptor;
+        @Captor
+        private ArgumentCaptor<Product> productCaptor;
 
-    @Test
-    public void shouldCreateProduct() {
-        Product product = product();
-        when(repository.save(product)).thenReturn(product);
+        @Test
+        public void shouldCreateProduct() {
+            Product product = product();
+            when(repository.save(product)).thenReturn(1001L);
 
-        Product result = victim.createProduct(product);
+            Long result = victim.createProduct(product);
 
-        verify(validationService).validate(productCaptor.capture());
-        Product captorResult = productCaptor.getValue();
+            verify(validationService).validate(productCaptor.capture());
+            Product captorResult = productCaptor.getValue();
 
-        assertThat(captorResult).isEqualTo(product);
-        assertThat(product.getId()).isEqualTo(result);
+            assertThat(captorResult).isEqualTo(product);
+            assertThat(product.getId()).isEqualTo(result);
+        }
+
+        @Test
+        public void shouldFindProductById() {
+            when(repository.findProductById(1001L)).thenReturn(Optional.of(product()));
+
+            Product result = victim.findProductById(1001L);
+
+            assertThat(result).isEqualTo(product());
+        }
+
+        @Test
+        public void shouldThrowExceptionProductNotFound() {
+            when(repository.findProductById(any())).thenReturn(Optional.empty());
+
+            assertThatThrownBy(() -> victim.findProductById(1001L))
+                    .isInstanceOf(NoSuchElementException.class)
+                    .hasMessage("Product not found, id: 1001");
+        }
+
+        private Product product() {
+            Product product = new Product();
+            product.setName("TEST_NAME");
+            product.setDescription("TEST_DESCRIPTION");
+            product.setId(1001L);
+            return product;
+        }
     }
-
-    @Test
-    public void shouldFindProductById() {
-        when(repository.findProductById(1001L)).thenReturn(Optional.ofNullable(product()));
-
-        Product result = victim.findProductById(1001L);
-
-        assertThat(result).isEqualTo(product());
-    }
-
-    @Test
-    public void shouldThrowExceptionProductNotFound() {
-        when(repository.findProductById(any())).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> victim.findProductById(1001L))
-                .isInstanceOf(NoSuchElementException.class)
-                .hasMessage("Product not found, id: 1001");
-    }
-
-    private Product product() {
-        Product product = new Product();
-        product.setName("TEST_NAME");
-        product.setDescription("TEST_DESCRIPTION");
-        product.setId(1001L);
-        return product;
-    }
-}

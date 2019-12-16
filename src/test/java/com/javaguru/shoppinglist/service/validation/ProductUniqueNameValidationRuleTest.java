@@ -1,5 +1,6 @@
 package com.javaguru.shoppinglist.service.validation;
 
+
 import com.javaguru.shoppinglist.domain.Product;
 import com.javaguru.shoppinglist.repository.ProductRepository;
 import org.junit.Test;
@@ -17,7 +18,8 @@ import static org.mockito.Mockito.when;
 public class ProductUniqueNameValidationRuleTest {
 
     @Mock
-    private ProductRepository productRepository;
+    private ProductRepository hibernateProductRepository;
+
     @Spy
     @InjectMocks
     private ProductUniqueNameValidationRule victim;
@@ -26,7 +28,7 @@ public class ProductUniqueNameValidationRuleTest {
 
     @Test
     public void shouldThrowException() {
-        when(productRepository.existsByName(product.getName()))
+        when(hibernateProductRepository.existsByName(product.getName()))
                 .thenReturn(true);
 
         assertThatThrownBy(() -> victim.validate(product))
@@ -38,7 +40,7 @@ public class ProductUniqueNameValidationRuleTest {
 
     @Test
     public void shouldValidateSuccess() {
-        when(productRepository.existsByName(product.getName()))
+        when(hibernateProductRepository.existsByName(product.getName()))
                 .thenReturn(false);
 
         victim.validate(product);

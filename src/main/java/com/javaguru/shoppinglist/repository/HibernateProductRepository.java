@@ -24,16 +24,16 @@ public class HibernateProductRepository implements ProductRepository {
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public Product save(Product product) {
+
+    public Long save(Product product) {
         sessionFactory.getCurrentSession().save(product);
-        return product;
+        return product.getId();
     }
     public void update(Product product) {
-        sessionFactory.getCurrentSession().update(product);
+        sessionFactory.getCurrentSession().saveOrUpdate(product);
     }
 
-    @Override
+
     public Optional<Product> findProductById(Long id) {
         Product product = (Product)sessionFactory.getCurrentSession().createCriteria(Product.class)
                 .add(Restrictions.eq("id", id))
@@ -41,7 +41,7 @@ public class HibernateProductRepository implements ProductRepository {
         return Optional.ofNullable(product);
     }
 
-    @Override
+
     public boolean existsByName(String name) {
         String query = "SELECT CASE WHEN count(*)> 0 " +
                 "THEN true ELSE false END " +
@@ -51,18 +51,21 @@ public class HibernateProductRepository implements ProductRepository {
                 .uniqueResult();
     }
 
-    @Override
+
     public Optional<Product> findProductByName(String name) {
         Product product = (Product)sessionFactory.getCurrentSession().createCriteria(Product.class)
                 .add(Restrictions.eq("name", name))
                 .uniqueResult();
         return Optional.ofNullable(product);
+
     }
 
     public List<Product> findAll() {
         return sessionFactory.getCurrentSession().createCriteria(Product.class)
                 .list();
+
     }
+
     public void delete(Product product) {
         sessionFactory.getCurrentSession().delete(product);
     }

@@ -1,5 +1,6 @@
 package com.javaguru.shoppinglist.service.validation;
 
+
 import com.javaguru.shoppinglist.domain.Product;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,6 +45,7 @@ public class ProductValidationServiceTest {
     @Test
     public void shouldValidate() {
         victim.validate(product);
+
         verify(uniqueNameValidationRule).validate(captor.capture());
         verify(productNameValidationRule).validate(captor.capture());
 
@@ -54,8 +56,8 @@ public class ProductValidationServiceTest {
     private Product product() {
         Product product = new Product();
         product.setId(100L);
-        product.setDescription("PRODUCT_DESCRIPTION");
-        product.setName("PRODUCT_NAME");
+        product.setDescription("TEST_DESCRIPTION");
+        product.setName("TEST_NAME");
         return product;
     }
 }
