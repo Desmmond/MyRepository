@@ -1,60 +1,44 @@
 package com.javaguru.shoppinglist.service.validation;
 
-import com.javaguru.shoppinglist.domain.Product;
 import static org.assertj.core.api.Assertions.*;
 
-import org.junit.Before;
+import com.javaguru.shoppinglist.domain.Product;
+import com.javaguru.shoppinglist.dto.ProductDto;
 import org.junit.Test;
+import org.mockito.Spy;
 
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
 
 public class ProductNameValidationRuleTest {
 
-    private static final int MIN_LENGTH = 3;
-    private static final int MAX_LENGTH = 32;
-
+    @Spy
     private ProductNameValidationRule victim;
 
-    @Before
-    public void setUp() {
-        victim = new ProductNameValidationRule();
+    private Product input;
+
+    @Test
+    public void shouldThrowTaskValidationException() {
+        input = product(null);
+
+        assertThatThrownBy(() -> victim.validate(input))
+                .isInstanceOf(ProductValidationException.class)
+                .hasMessage("Product name must be not null.");
+        verify(victim).checkNotNull(input);
     }
 
     @Test
-    public void shouldThrowException() {
-        Product input = product();
-        input.setName(null);
-        assertThatThrownBy(()->victim.validate(input)).
-                isInstanceOf(ProductValidationException.class).
-                hasMessage("Product name must be not null.");
+    public void shouldValidateSuccess() {
+        input = product("valid name");
 
-    }
-    @Test
-    public void shouldTrowMinLengthNameException() {
-        Product input = product();
-        input.setName("Hi");
-        assertThatThrownBy(()-> victim.validate(input)).
-                isInstanceOf(ProductValidationException.class).
-                hasMessage("Name cannot be less than 3 characters and more than 32. Please try again|");
-    }
-    @Test
-    public void shouldTrowMaxLengthNameException() {
-        Product input = product();
-        input.setName("SehensvurdikaitenInDeultchlandIstserhVunderbar_DasIsDieEndeDIeMessege");
-        assertThatThrownBy(()-> victim.validate(input)).
-                isInstanceOf(ProductValidationException.class).
-                hasMessage("Name cannot be less than 3 characters and more than 32. Please try again|");
+        victim.validate(input);
 
+        verify(victim).checkNotNull(input);
     }
 
-    @Test
-    public void validate() {
-        victim.validate(product());
-    }
-
-    private Product product() {
+    private Product product(String name) {
         Product product = new Product();
-        product.setName("Test");
+        product.setName(name);
         return product;
     }
+
 }

@@ -1,6 +1,8 @@
 package com.javaguru.shoppinglist.service.validation;
 
+
 import com.javaguru.shoppinglist.domain.Product;
+import com.javaguru.shoppinglist.dto.ProductDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,7 +24,6 @@ public class ProductNameValidationRule implements ProductValidationRule {
         }
 
     }
-
 
 }
 

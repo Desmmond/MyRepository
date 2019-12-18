@@ -1,16 +1,68 @@
 package com.javaguru.shoppinglist.domain;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+
+@Entity
+@Table(name = "products")
 public class Product {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
+
+    @Column(name = "price")
     private BigDecimal price;
+
+    @Column(name = "category")
     private String category;
+
+    @Column(name = "discount")
     private BigDecimal discount;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) &&
+                Objects.equals(name, product.name) &&
+                Objects.equals(price, product.price) &&
+                Objects.equals(category, product.category) &&
+                Objects.equals(discount, product.discount) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(userId, product.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, category, discount, description, userId);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", category='" + category + '\'' +
+                ", discount=" + discount +
+                ", description='" + description + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
 
     public Long getId() {
         return id;
@@ -60,33 +112,15 @@ public class Product {
         this.description = description;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
-        Product product = (Product) o;
-        return discount == product.discount &&
-                Objects.equals(id, product.id) &&
-                Objects.equals(name, product.name) &&
-                Objects.equals(price, product.price) &&
-                Objects.equals(category, product.category) &&
-                Objects.equals(description, product.description);
+    public Long getUserId() {
+        return userId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, price, category, discount, description);
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", category='" + category + '\'' +
-                ", discount=" + discount +
-                ", description='" + description + '\'' +
-                '}';
+
     }
-}
+
+
